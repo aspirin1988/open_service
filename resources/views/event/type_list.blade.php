@@ -5,11 +5,11 @@
         <form action="" method="post" class=" uk-panel-box uk-form uk-form-horizontal">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <fieldset data-uk-margin="">
-                <legend>Добавить город</legend>
+                <legend>Добавить событие</legend>
                 <div class="uk-form-row">
                     <label for="name" class="uk-form-label">Название события:*</label>
                     <div class="uk-form-controls">
-                        <input type="text" id="name" name="name" ng-model="Event.name" class="uk-width-9-10"
+                        <input type="text" id="name" name="name" ng-mouk-border-roundeddel="Event.name" class="uk-width-9-10"
                                placeholder="Название события">
                     </div>
                 </div>

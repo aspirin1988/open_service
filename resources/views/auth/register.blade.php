@@ -5,7 +5,7 @@
         <div class="uk-container uk-container-center">
             <div class="uk-grid">
                 <div class="uk-width-1-4"></div>
-                <div class="uk-width-2-4 uk-form uk-form-horizontal" style="background: rgba(0, 0, 0, 0.6); padding: 10px; color: #FFF;">
+                <div class="uk-width-2-4 uk-form uk-form-horizontal uk-border-rounded" style="background: rgba(0, 0, 0, 0.6); padding: 10px; color: #FFF;">
                     <div class="panel panel-default">
                         <div class="panel-heading">Register</div>
                         <div class="panel-body">
