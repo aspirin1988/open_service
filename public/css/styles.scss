@@ -1,0 +1,283 @@
+html{
+  ::-webkit-scrollbar-track
+  {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #F5F5F5;
+  }
+
+  ::-webkit-scrollbar
+  {
+    width: 5px;
+    background-color: #F5F5F5;
+  }
+
+  ::-webkit-scrollbar-thumb
+  {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #0074ff;
+  }
+}
+
+@function colour($value) {
+  @return map-get($colours, $value);
+}
+[ng-controller]{
+  display: none;
+}
+$preloader-height: 5px;
+$colours: (green: #159756, red: #da4733, blue: #3b78e7, yellow: #fdba2c);
+$animation-duration: 3.5s;
+[role="progressbar"] {
+  position: relative;
+  padding-top: $preloader-height;
+  width: 100%;
+  margin: -5px 0 0 0;
+  background-color: colour(green);
+  animation: preloader-background linear $animation-duration infinite;
+
+  &::before,
+  &::after {
+    display: block;
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    width: 0;
+    height: $preloader-height;
+    background: #afa;
+    animation: preloader-front linear $animation-duration infinite;
+    content: '';
+  }
+
+  &::before {
+    right: 50%;
+  }
+
+  &::after {
+    left: 50%;
+  }
+}
+
+// Animations
+@keyframes preloader-background {
+  0%, 24.9% {
+    background-color: colour(green);
+  }
+
+  25%, 49.9% {
+    background-color: colour(red);
+  }
+
+  50%, 74.9% {
+    background-color: colour(blue);
+  }
+
+  75%, 100% {
+    background-color: colour(yellow);
+  }
+}
+
+@keyframes preloader-front {
+  0% {
+    width: 0;
+    background-color: colour(red);
+  }
+
+  24.9% {
+    width: 50%;
+    background-color: colour(red);
+  }
+
+  25% {
+    width: 0;
+    background-color: colour(blue);
+  }
+
+  49.9% {
+    width: 50%;
+    background-color: colour(blue);
+  }
+
+  50% {
+    width: 0;
+    background-color: colour(yellow);
+  }
+
+  74.9% {
+    width: 50%;
+    background-color: colour(yellow);
+  }
+
+  75% {
+    width: 0%;
+    background-color: colour(green);
+  }
+
+  100% {
+    width: 50%;
+    background-color: colour(green);
+  }
+}
+
+.onoffswitch {
+  position: relative;
+  width: 50px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.onoffswitch-checkbox {
+  display: none;
+
+  &:checked + .onoffswitch-label {
+    background-color: #4688EB;
+  }
+  &:checked + .onoffswitch-label:before {
+    border-color: #4688EB;
+  }
+  &:checked + .onoffswitch-label:before {
+    right: 0;
+  }
+}
+
+.onoffswitch-label {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  height: 20px;
+  padding: 0;
+  line-height: 20px;
+  border: 2px solid #E3E3E3;
+  border-radius: 20px;
+  background-color: #FFFFFF;
+  transition: background-color 0.3s ease-in;
+  &:before {
+    content: "";
+    display: block;
+    width: 20px;
+    margin: 0;
+    background: #FFFFFF;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 28px;
+    border: 2px solid #E3E3E3;
+    border-radius: 20px;
+    transition: all 0.3s ease-in 0s;
+  }
+}
+
+
+.uk-container {
+  @media (max-width: 1920px) {
+    max-width: inherit;
+    padding: 0 35px;
+  }
+  @media (max-width: 2560px) {
+    max-width: 1920px;
+    padding: 0 35px;
+  }
+}
+
+.uk-nav-header {
+  color: #ffffff;
+}
+
+.tm-background {
+  background: #000000;
+  .tm-navbar {
+    position: relative;
+    z-index: 100;
+  }
+  .tm-middle {
+    background: #ffffff;
+    .uk-grid {
+      .tm-sidebar {
+        height: 100VH;
+        margin: -42px 0 0 0;
+        padding: 42px 0 42px 0;
+        background-color: rgba(42, 42, 42, 1);
+        .uk-nav {
+          li {
+            &.uk-active {
+              &:after {
+                font-family: FontAwesome;
+                display: inline-block;
+                font-weight: 400;
+                font-style: normal;
+                line-height: 1;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;
+                content: "\f00c";
+                float: right;
+                padding: 0 10px 0 0;
+                margin: -22px 0 0 0;
+                color: #ffffff;
+              }
+            }
+            a {
+              color: #DDDD76;
+              transition: 1s all;
+              &:hover {
+                color: #DDDD00;
+                background: #0077ff;
+              }
+            }
+          }
+        }
+        nav {
+          overflow: hidden;
+          overflow-y: auto;
+          padding: 42px 0 0 0;
+          height: 100%;
+        }
+      }
+    }
+  }
+  .tm-main {
+    height: 100VH;
+    margin: -42px -35px 0 35px;
+    padding: 42px 0 42px 0;
+    .content {
+      height: 100%;
+      overflow: hidden;
+      overflow-y: auto;
+    }
+  }
+}
+
+.main_video {
+  padding: 10px 35px 0 0;
+}
+
+.calendar {
+  margin: 0;
+  .calendar-day {
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    .day-content {
+      height: 100px;
+      .events-list {
+        overflow: hidden;
+        overflow-y: auto;
+        max-height: 75px;
+        @media (max-width: 1440px) {
+          max-height: 50px;
+        }
+      }
+    }
+    .current_day {
+      background: rgba(120, 255, 120, .6);
+    }
+  }
+}
+
+.uk-width-1-7 {
+  width: 14.28%;
+}
+
+.calendar-navigation {
+  min-width: 150px;
+}
