@@ -7,10 +7,10 @@
             <fieldset data-uk-margin="">
                 <legend>Добавить город</legend>
                 <div class="uk-form-row">
-                    <label for="name" class="uk-form-label">Название города:*</label>
+                    <label for="name" class="uk-form-label">Название события:*</label>
                     <div class="uk-form-controls">
                         <input type="text" id="name" name="name" ng-model="Event.name" class="uk-width-9-10"
-                               placeholder="Зазвание события">
+                               placeholder="Название события">
                     </div>
                 </div>
                 <div class="uk-form-row">

@@ -10,7 +10,7 @@
                     <label for="name" class="uk-form-label">Название города:*</label>
                     <div class="uk-form-controls">
                         <input type="text" id="name" name="name" ng-model="Event.name" class="uk-width-9-10"
-                               placeholder="Зазвание события">
+                               placeholder="Название города">
                     </div>
                 </div>
                 <div class="uk-form-row">

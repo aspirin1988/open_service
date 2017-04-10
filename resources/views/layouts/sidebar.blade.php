@@ -12,10 +12,10 @@
                 <a href="{{url('/admin/event/types')}}">Типы событий</a>
             </li>
 
-            <li class="uk-nav-header">Пользователи</li>
-            <li class="@if($that->request_url==url('/admin/users')) uk-active @endif">
-                <a href="{{url('/admin/users')}}">Список пользователей</a>
-            </li>
+            {{--<li class="uk-nav-header">Пользователи</li>--}}
+{{--            <li class="@if($that->request_url==url('/admin/users')) uk-active @endif">--}}
+{{--                <a href="{{url('/admin/users')}}">Список пользователей</a>--}}
+            {{--</li>--}}
             <li class="uk-nav-header">Города</li>
             <li class="@if($that->request_url==url('/admin/cities')) uk-active @endif">
                 <a href="{{url('/admin/cities')}}">Список городов</a>
