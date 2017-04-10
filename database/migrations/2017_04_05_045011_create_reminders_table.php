@@ -15,10 +15,10 @@ class CreateRemindersTable extends Migration
     {
         Schema::create('reminders', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('event_id');
+            $table->integer('event_id')->default(0);
             $table->dateTime('send_date');
-            $table->boolean('done');
-            $table->integer('user_id');
+            $table->boolean('done')->default(false);
+            $table->integer('user_id')->default(0);
             $table->timestamps();
         });
     }

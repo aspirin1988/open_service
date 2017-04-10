@@ -14,7 +14,7 @@
         public function up()
         {
             Schema::table( 'events', function( Blueprint $table ) {
-                $table->time( 'time' );
+                $table->time( 'time' )->default('00:00:00');
             } );
         }
 
