@@ -31,6 +31,9 @@
                     </a>
                     <div class="uk-dropdown uk-dropdown-navbar uk-dropdown-autoflip uk-dropdown-bottom">
                         <ul class="uk-nav uk-nav-navbar">
+                            <li>
+                                <a href="{{ url('/home') }}">Home</a>
+                            </li>
                             <li><a href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
