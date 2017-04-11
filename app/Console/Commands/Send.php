@@ -42,6 +42,7 @@
          */
         public function handle()
         {
+            date_default_timezone_set('Asia/Almaty');
             $now        = time();
             $date_start = date( 'Y-m-d H:i', $now );
             $date_end   = date( 'Y-m-d H:i', ( $now + 60 * 60 ) );
