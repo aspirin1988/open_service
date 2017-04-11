@@ -45,6 +45,8 @@
             $now        = time();
             $date_start = date( 'Y-m-d H:i', $now );
             $date_end   = date( 'Y-m-d H:i', ( $now + 60 * 60 ) );
+            var_dump($date_start);
+            var_dump($date_end);
 
             $reminders = Reminder::where( 'send_date', '>=', $date_start )->where( 'send_date', '<', $date_end )->where( 'done', 0 )->where( 'active', 1 )->get();
 
