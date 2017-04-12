@@ -55,15 +55,15 @@
             foreach( $reminders as $reminder ) {
                 $data = Event::where( 'id', $reminder->event_id )->first();
                 $text = '';
-                $text .= "<strong>".$data->name."</strong>\n";
-                $text .= '🔔  '.$data->getTypeName()."\n";
-                $text .= '📆 Дата проведения<pre>   '.$data->the_date."</pre>\n";
-                $text .= '📆 Начало регистрации<pre>   '.$data->registration_date."</pre>\n";
-                $text .= '🏙 Город : <b>'.$data->getCityName()."</b>\n\n";
-                $text .= '📍 Место : <b>'.$data->address."</b>\n\n";
-                $text .= '🕐 Время<pre>   '.$data->time."</pre>\n";
-                $text .= '🔗 Ссылка '.$data->link."\n\n";
-                $text .= $data->content."\n";
+                $text .= ( !empty( $data->name ) ?              "<strong>".$data->name."</strong>\n" : '' );
+                $text .= ( !empty( $data->getTypeName() ) ?     '🔔  '.$data->getTypeName()."\n" : '' );
+                $text .= ( !empty( $data->the_date ) ?          '📆 Дата проведения : '.$data->the_date."\n" : '' );
+                $text .= ( !empty( $data->registration_date ) ? '📆 Начало регистрации : '.$data->registration_date."\n" : '' );
+                $text .= ( !empty( $data->getCityName() ) ?     '🏙 Город : <b>'.$data->getCityName()."</b>\n" : '' );
+                $text .= ( !empty( $data->address ) ?           '📍 Место : <b>'.$data->address."</b>\n" : '' );
+                $text .= ( !empty( $data->time ) ?              '🕐 Время: '.$data->time."\n" : '' );
+                $text .= ( !empty( $data->link ) ?              '🔗 Ссылка '.$data->link."\n" : '' );
+                $text .= ( !empty( $data->content ) ? $data->content."\n" : '' );
 
                 Bot::send( '@op_it_test', $text );
 
