@@ -219,6 +219,8 @@ app.controller('EventCalendarCtrl' , function ($scope , messages , Translate , $
     $scope.Year = false;
     $scope.EventID = false;
     $scope.CurrentDate = false;
+    $scope.ChannelList = [];
+    $scope.AddChannelID = false;
 
     $scope.$watch('Month && Year' , function (e)
     {
@@ -247,8 +249,45 @@ app.controller('EventCalendarCtrl' , function ($scope , messages , Translate , $
             });
     };
 
+    $scope.getChanenlList = function (id)
+    {
+        $http({
+            method: 'GET' ,
+            url   : '/admin/event/get/channels/' + id
+        }).then(function success(response)
+        {
+            $scope.ChannelList = response.data;
+
+        } , function error(response)
+        {
+
+        });
+    };
+
+    $scope.addChannel = function ()
+    {
+        if ($scope.AddChannelID)
+        {
+            $http({
+                method: 'POST' ,
+                url   : '/admin/event/add/channel/' + $scope.EventID ,
+                data  : {
+                    'channel_id': $scope.AddChannelID
+                }
+            }).then(function success(response)
+            {
+                $scope.ShowEvent($scope.EventID);
+
+            } , function error(response)
+            {
+
+            });
+        }
+    };
+
     $scope.ShowEvent = function (id)
     {
+        $scope.getChanenlList(id);
         $http({
             method: 'POST' ,
             url   : '/admin/event/get' ,
@@ -282,6 +321,7 @@ app.controller('EventCalendarCtrl' , function ($scope , messages , Translate , $
     {
         $scope.EventID = false;
         $scope.Event = {reminders: []};
+        $scope.getChanenlList($scope.EventID);
         $scope.Event.the_date = date;
         $scope.modal.show();
     };
@@ -397,6 +437,25 @@ app.controller('EventCalendarCtrl' , function ($scope , messages , Translate , $
         });
     };
 
+    $scope.deleteChannel = function (id)
+    {
+
+        $http({
+            method: 'DELETE' ,
+            url   : '/admin/event/channel/delete/'+ id
+        }).then(function success(response)
+            {
+                $scope.ShowEvent($scope.EventID);
+                messages.Success('Канал успешно удален!');
+            } ,
+            function error(response)
+            {
+                messages.Error('Канал не может быть удален!');
+
+            });
+
+    };
+
     $scope.deleteReminder = function (id)
     {
         $http({
@@ -421,7 +480,7 @@ app.controller('EventsListCtrl' , function ($scope , messages , Translate , $htt
 {
     $scope.Events = [];
     $scope.modal = UIkit.modal("#my-id");
-    $scope.Event={};
+    $scope.Event = {};
 
     $scope.getEvents = function ()
     {

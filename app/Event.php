@@ -60,6 +60,19 @@
             return $data;
         }
 
+        public function getChannels()
+        {
+            $data = ChannelRelation::where( 'event_id', $this->id )->get();
+
+            foreach( $data as $key => $value ) {
+                $data[ $key ]->getChannel();
+            }
+
+            $this->channels = $data;
+
+            return $data;
+        }
+
         public function deleteReminders()
         {
             $data = Reminder::where( 'event_id', $this->id )->delete();

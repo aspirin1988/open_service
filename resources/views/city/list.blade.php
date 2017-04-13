@@ -15,7 +15,7 @@
                 </div>
                 <div class="uk-form-row">
                     <div class="uk-form-controls">
-                        <input type="submit" class="uk-button uk-button-success">
+                        <input type="submit" class="uk-button uk-button-success" value="Добавить">
                     </div>
                 </div>
             </fieldset>

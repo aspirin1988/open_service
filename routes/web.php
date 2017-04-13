@@ -1,7 +1,7 @@
 <?php
 
     Route::get( '/', function() {
-        return view( 'welcome',['that'=>$this] );
+        return view( 'welcome', [ 'that' => $this ] );
     } );
 
     Auth::routes();
@@ -14,6 +14,10 @@
         Route::post( '/admin/cities/', 'CityController@add' );
         Route::get( '/admin/city/delete/{id}', 'CityController@delete' );
 
+        Route::get( '/admin/channels/', 'ChannelController@index' );
+        Route::post( '/admin/channels/', 'ChannelController@add' );
+        Route::get( '/admin/channel/delete/{id}', 'ChannelController@delete' );
+
 
         Route::get( '/admin/event/types/', 'EventsController@typeList' );
         Route::post( '/admin/event/types/', 'EventsController@typeAdd' );
@@ -21,7 +25,6 @@
 
         Route::get( '/admin/events/', 'EventsController@EventList' );
         Route::post( '/admin/events/get/list', 'EventsController@EventListGet' );
-
 
 
         Route::get( '/admin/events/calendar', 'EventsController@calendar' );
@@ -34,6 +37,9 @@
         Route::post( '/admin/events/get', 'EventsController@calendarGet' );
         Route::delete( '/admin/event/delete/{id}', 'EventsController@deleteEvent' );
         Route::delete( '/admin/reminder/delete/{id}', 'EventsController@deleteReminder' );
+        Route::get( '/admin/event/get/channels/{id}', 'EventsController@getChannelList' );
+        Route::delete( '/admin/event/channel/delete/{id}', 'EventsController@delChannel' );
+        Route::post( '/admin/event/add/channel/{id}', 'EventsController@addChannel' );
 
 //        Route::get( '/admin/event/add', 'EventsController@add' );
 

@@ -11,6 +11,10 @@
             <li class="@if($that->request_url==url('/admin/event/types')) uk-active @endif">
                 <a href="{{url('/admin/event/types')}}">Типы событий</a>
             </li>
+            <li class="uk-nav-header">Каналы</li>
+            <li class="@if($that->request_url==url('/admin/channels')) uk-active @endif">
+                <a href="{{url('/admin/channels')}}">Список каналов</a>
+            </li>
 
             {{--<li class="uk-nav-header">Пользователи</li>--}}
 {{--            <li class="@if($that->request_url==url('/admin/users')) uk-active @endif">--}}

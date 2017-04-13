@@ -2,6 +2,8 @@
 
     namespace App\Http\Controllers;
 
+    use App\Channel;
+    use App\ChannelRelation;
     use App\City;
     use App\Event;
     use App\EventType;
@@ -190,6 +192,7 @@
             $id   = $request->input( 'id' );
             $data = Event::where( 'id', $id )->first();
             $data->getReminders();
+            $data->getChannels();
 
             return response()->json( ( $data ? $data : [] ) );
 
@@ -208,14 +211,14 @@
                 $data->addReminder( $reminder );
             }
             $text = '';
-            $text .= ( !empty( $data->name ) ?              "<strong>".$data->name."</strong>\n" : '' );
-            $text .= ( !empty( $data->getTypeName() ) ?     '🔔  '.$data->getTypeName()."\n" : '' );
-            $text .= ( !empty( $data->the_date ) ?          '📆 Дата проведения : '.$data->the_date."\n" : '' );
+            $text .= ( !empty( $data->name ) ? "<strong>".$data->name."</strong>\n" : '' );
+            $text .= ( !empty( $data->getTypeName() ) ? '🔔  '.$data->getTypeName()."\n" : '' );
+            $text .= ( !empty( $data->the_date ) ? '📆 Дата проведения : '.$data->the_date."\n" : '' );
             $text .= ( !empty( $data->registration_date ) ? '📆 Начало регистрации : '.$data->registration_date."\n" : '' );
-            $text .= ( !empty( $data->getCityName() ) ?     '🏙 Город : <b>'.$data->getCityName()."</b>\n" : '' );
-            $text .= ( !empty( $data->address ) ?           '📍 Место : <b>'.$data->address."</b>\n" : '' );
-            $text .= ( !empty( $data->time ) ?              '🕐 Время: '.$data->time."\n" : '' );
-            $text .= ( !empty( $data->link ) ?              '🔗 Ссылка '.$data->link."\n" : '' );
+            $text .= ( !empty( $data->getCityName() ) ? '🏙 Город : <b>'.$data->getCityName()."</b>\n" : '' );
+            $text .= ( !empty( $data->address ) ? '📍 Место : <b>'.$data->address."</b>\n" : '' );
+            $text .= ( !empty( $data->time ) ? '🕐 Время: '.$data->time."\n" : '' );
+            $text .= ( !empty( $data->link ) ? '🔗 Ссылка '.$data->link."\n" : '' );
             $text .= ( !empty( $data->content ) ? $data->content."\n" : '' );
 
             Bot::send( '@op_it_test', $text );
@@ -299,4 +302,29 @@
 
             return redirect()->to( '/admin/event/types' );
         }
+
+        public function getChannelList( $id )
+        {
+            $data = Channel::leftJoin( 'channel_relations', 'channels.id', '=', 'channel_relations.channel_id' )
+                ->select( 'channels.id', 'channels.name', 'channel_relations.event_id' )
+                ->where( 'channel_relations.event_id', '!=', $id )
+                ->orWhere( 'channel_relations.event_id', null )
+                ->get();
+
+            return response()->json( $data );
+        }
+
+        public function delChannel( $id )
+        {
+            return response()->json( ChannelRelation::where( 'id', $id )->delete() );
+        }
+
+        public function addChannel( $id, Request $request )
+        {
+            $chanel_id = $request->input( 'channel_id' );
+            $data      = ChannelRelation::create( [ 'event_id' => $id, 'channel_id' => $chanel_id ] );
+
+            return response()->json( $data );
+        }
+
     }
