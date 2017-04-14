@@ -509,7 +509,24 @@ app.controller('EventsListCtrl' , function ($scope , messages , Translate , $htt
     $scope.Events = [];
     $scope.modal = UIkit.modal("#my-id");
     $scope.Event = {reminders: [] , channels: []};
+    $scope.ChannelList = []
     $scope.AddChannelID = false;
+    $scope.EventID = false;
+
+    $scope.getChanenlList = function (id)
+    {
+        $http({
+            method: 'GET' ,
+            url   : '/admin/event/get/channels/' + id
+        }).then(function success(response)
+        {
+            $scope.ChannelList = response.data;
+
+        } , function error(response)
+        {
+
+        });
+    };
 
     $scope.getEvents = function ()
     {
@@ -530,6 +547,8 @@ app.controller('EventsListCtrl' , function ($scope , messages , Translate , $htt
 
     $scope.ShowEvent = function (id)
     {
+        $scope.EventID = id;
+        $scope.getChanenlList(id);
         $http({
             method: 'POST' ,
             url   : '/admin/event/get' ,
@@ -562,6 +581,7 @@ app.controller('EventsListCtrl' , function ($scope , messages , Translate , $htt
     {
         $scope.EventID = false;
         $scope.Event = {reminders: [] , channels: []};
+        $scope.getChanenlList($scope.EventID);
         $scope.Event.the_date = date;
         $scope.modal.show();
     };

@@ -312,10 +312,10 @@
 
         public function getChannelList( $id )
         {
-            $data = Channel::leftJoin( 'channel_relations', 'channels.id', '=', 'channel_relations.channel_id' )
+
+            $data = Channel::whereNotIn( 'id', ChannelRelation::select( 'channel_id' )
+                ->where( 'event_id', $id )->get() )
                 ->select( 'channels.id', 'channels.name' )
-                ->where( 'channel_relations.event_id', '!=', $id )
-                ->orWhere( 'channel_relations.event_id', null )
                 ->get();
 
             return response()->json( $data );
