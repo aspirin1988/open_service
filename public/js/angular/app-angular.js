@@ -213,7 +213,7 @@ app.controller('EventCalendarCtrl' , function ($scope , messages , Translate , $
     $scope.DateStart = false;
     $scope.DateEnd = false;
     $scope.modal = UIkit.modal("#my-id");
-    $scope.Event = {reminders: []};
+    $scope.Event = {reminders: [] , channels: []};
     $scope.Events = [];
     $scope.Month = false;
     $scope.Year = false;
@@ -266,7 +266,7 @@ app.controller('EventCalendarCtrl' , function ($scope , messages , Translate , $
 
     $scope.addChannel = function ()
     {
-        if ($scope.AddChannelID)
+        if ( $scope.AddChannelID )
         {
             $http({
                 method: 'POST' ,
@@ -282,6 +282,24 @@ app.controller('EventCalendarCtrl' , function ($scope , messages , Translate , $
             {
 
             });
+        }
+    };
+
+    $scope.addChannelNew = function ()
+    {
+        console.log($scope.ChannelList[$scope.AddChannelID]);
+        console.log($scope.AddChannelID);
+
+        if ( $scope.AddChannelID )
+        {
+            $scope.Event.channels.push({
+                channel: {
+                    "id"  : $scope.ChannelList[$scope.AddChannelID].id ,
+                    "name": $scope.ChannelList[$scope.AddChannelID].name
+                }
+            });
+            $scope.ChannelList.splice($scope.AddChannelID , 1);
+            $scope.AddChannelID = false;
         }
     };
 
@@ -320,7 +338,7 @@ app.controller('EventCalendarCtrl' , function ($scope , messages , Translate , $
     $scope.ShowAddEvent = function (date)
     {
         $scope.EventID = false;
-        $scope.Event = {reminders: []};
+        $scope.Event = {reminders: [] , channels: []};
         $scope.getChanenlList($scope.EventID);
         $scope.Event.the_date = date;
         $scope.modal.show();
@@ -383,7 +401,7 @@ app.controller('EventCalendarCtrl' , function ($scope , messages , Translate , $
                 {
                     $scope.getEvents();
                     $scope.EventID = false;
-                    $scope.Event = {reminders: []};
+                    $scope.Event = {reminders: [] , channels: []};
                     messages.Success('Событие успешно добавлено!');
                     $scope.modal.hide();
                 } ,
@@ -414,7 +432,7 @@ app.controller('EventCalendarCtrl' , function ($scope , messages , Translate , $
         }).then(function success(response)
             {
                 $scope.EventID = false;
-                $scope.Event = {reminders: []};
+                $scope.Event = {reminders: [] , channels: []};
                 $scope.modal.hide();
                 $scope.getEvents();
 
@@ -442,7 +460,7 @@ app.controller('EventCalendarCtrl' , function ($scope , messages , Translate , $
 
         $http({
             method: 'DELETE' ,
-            url   : '/admin/event/channel/delete/'+ id
+            url   : '/admin/event/channel/delete/' + id
         }).then(function success(response)
             {
                 $scope.ShowEvent($scope.EventID);
@@ -454,6 +472,15 @@ app.controller('EventCalendarCtrl' , function ($scope , messages , Translate , $
 
             });
 
+    };
+
+    $scope.deleteChannelNew = function (key)
+    {
+        $scope.ChannelList.push({
+            "id"  : $scope.Event.channels[key].channel.id ,
+            "name": $scope.Event.channels[key].channel.name
+        });
+        $scope.Event.channels.splice(key , 1);
     };
 
     $scope.deleteReminder = function (id)
@@ -472,6 +499,7 @@ app.controller('EventCalendarCtrl' , function ($scope , messages , Translate , $
 
             });
     };
+
 
 });
 

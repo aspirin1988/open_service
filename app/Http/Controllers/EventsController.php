@@ -12,7 +12,6 @@
     use Illuminate\Http\Request;
     use Illuminate\Support\Facades\Auth;
     use Illuminate\Support\Facades\Cache;
-    use App\Bot;
 
     class EventsController extends Controller
     {
@@ -204,24 +203,21 @@
             $data = $request->input( 'data' );
             Cache::pull( 'events_'.$data[ 'the_date' ] );
             $reminders = $data [ 'reminders' ];
+            $channels  = $data [ 'channels' ];
             unset( $data [ 'reminders' ] );
+            unset( $data [ 'channels' ] );
             $data[ 'user_id' ] = Auth::user()->id;
             $data              = Event::create( $data );
             foreach( $reminders as $reminder ) {
                 $data->addReminder( $reminder );
             }
-            $text = '';
-            $text .= ( !empty( $data->name ) ? "<strong>".$data->name."</strong>\n" : '' );
-            $text .= ( !empty( $data->getTypeName() ) ? '🔔  '.$data->getTypeName()."\n" : '' );
-            $text .= ( !empty( $data->the_date ) ? '📆 Дата проведения : '.$data->the_date."\n" : '' );
-            $text .= ( !empty( $data->registration_date ) ? '📆 Начало регистрации : '.$data->registration_date."\n" : '' );
-            $text .= ( !empty( $data->getCityName() ) ? '🏙 Город : <b>'.$data->getCityName()."</b>\n" : '' );
-            $text .= ( !empty( $data->address ) ? '📍 Место : <b>'.$data->address."</b>\n" : '' );
-            $text .= ( !empty( $data->time ) ? '🕐 Время: '.$data->time."\n" : '' );
-            $text .= ( !empty( $data->link ) ? '🔗 Ссылка '.$data->link."\n" : '' );
-            $text .= ( !empty( $data->content ) ? $data->content."\n" : '' );
 
-            Bot::send( '@op_it_test', $text );
+            foreach( $channels as $channel ) {
+                $data->addChannel( $channel[ 'channel' ] );
+            }
+
+            $data->Send();
+
 
             return response()->json( $data );
         }
@@ -231,7 +227,9 @@
             $input     = $request->input( 'data' );
             $date      = $input[ 'the_date' ];
             $reminders = $input [ 'reminders' ];
+            $channels  = $input [ 'channels' ];
             unset( $input [ 'reminders' ] );
+            unset( $input [ 'channels' ] );
 
             $data = Event::where( 'id', $id )->first();
 
@@ -244,6 +242,15 @@
                 }
                 else {
                     $data->addReminder( $reminder );
+                }
+            }
+
+            foreach( $channels as $channel ) {
+                if( isset( $channel[ 'id' ] ) ) {
+                    $data->updateChannel( $channel[ 'id' ], $channel[ 'channel' ] );
+                }
+                else {
+                    $data->addChannel( $channel[ 'channel' ] );
                 }
             }
 
@@ -306,7 +313,7 @@
         public function getChannelList( $id )
         {
             $data = Channel::leftJoin( 'channel_relations', 'channels.id', '=', 'channel_relations.channel_id' )
-                ->select( 'channels.id', 'channels.name', 'channel_relations.event_id' )
+                ->select( 'channels.id', 'channels.name' )
                 ->where( 'channel_relations.event_id', '!=', $id )
                 ->orWhere( 'channel_relations.event_id', null )
                 ->get();

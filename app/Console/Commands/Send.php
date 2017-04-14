@@ -54,18 +54,8 @@
 
             foreach( $reminders as $reminder ) {
                 $data = Event::where( 'id', $reminder->event_id )->first();
-                $text = '';
-                $text .= ( !empty( $data->name ) ?              "<strong>".$data->name."</strong>\n" : '' );
-                $text .= ( !empty( $data->getTypeName() ) ?     '🔔  '.$data->getTypeName()."\n" : '' );
-                $text .= ( !empty( $data->the_date ) ?          '📆 Дата проведения : '.$data->the_date."\n" : '' );
-                $text .= ( !empty( $data->registration_date ) ? '📆 Начало регистрации : '.$data->registration_date."\n" : '' );
-                $text .= ( !empty( $data->getCityName() ) ?     '🏙 Город : <b>'.$data->getCityName()."</b>\n" : '' );
-                $text .= ( !empty( $data->address ) ?           '📍 Место : <b>'.$data->address."</b>\n" : '' );
-                $text .= ( !empty( $data->time ) ?              '🕐 Время: '.$data->time."\n" : '' );
-                $text .= ( !empty( $data->link ) ?              '🔗 Ссылка '.$data->link."\n" : '' );
-                $text .= ( !empty( $data->content ) ? $data->content."\n" : '' );
 
-                Bot::send( '@op_it_test', $text );
+                $data->Send();
 
                 $reminder->done = 1;
                 $reminder->update();

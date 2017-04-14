@@ -115,12 +115,21 @@
                         <div class="uk-form-row" ng-class="{'uk-hidden':ChannelList.length==0}">
                             <label for="name" class="uk-form-label">Каналы :*</label>
                             <div class="uk-form-controls">
-                                <select ng-model="AddChannelID">
+
+                                <select ng-model="AddChannelID" ng-class="{'uk-hidden':!EventID}">
                                     <option ng-repeat="(key,channel) in ChannelList"
                                             value="[[channel.id]]">[[channel.name]]
                                     </option>
                                 </select>
-                                <i ng-click="addChannel()"
+
+                                <select ng-model="AddChannelID" ng-class="{'uk-hidden':EventID}">
+                                    <option ng-repeat="(key,channel) in ChannelList"
+                                            value="[[key]]">[[channel.name]]
+                                    </option>
+                                </select>
+                                <i ng-click="addChannel()" ng-class="{'uk-hidden':!EventID}"
+                                   class="uk-icon-plus uk-icon-small uk-icon-hover"></i>
+                                <i ng-click="addChannelNew()" ng-class="{'uk-hidden':EventID}"
                                    class="uk-icon-plus uk-icon-small uk-icon-hover"></i>
                             </div>
                         </div>
@@ -130,10 +139,18 @@
                                 <div class="uk-width-1-2" ng-repeat="(key,channel) in Event.channels">
                                     <div class="uk-panel uk-panel-box uk-panel-box-secondary">
                                         <a class="uk-float-right uk-button-mini uk-button-danger uk-text-center"
-                                           ng-click="deleteChannel(channel.id)"><i class="uk-icon-trash"></i></a>
+                                           ng-class="{'uk-hidden':!EventID}"
+                                           ng-click="deleteChannel(channel.id)">
+                                            <i class="uk-icon-trash"></i>
+                                        </a>
+                                        <a class="uk-float-right uk-button-mini uk-button-danger uk-text-center"
+                                           ng-class="{'uk-hidden':EventID}"
+                                           ng-click="deleteChannelNew(key)">
+                                            <i class="uk-icon-trash"></i>
+                                        </a>
                                         <div class="uk-form-row">
-                                            <label for="send_date"
-                                                   class="uk-form-label">[[channel.channel.name]]</label>
+                                            <label for="send_date" style="width: 110px"
+                                                   class="uk-form-label uk-overflow-hidden">[[channel.channel.name]]</label>
                                         </div>
                                     </div>
                                 </div>

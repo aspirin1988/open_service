@@ -60,6 +60,30 @@
             return $data;
         }
 
+        public function addChannel( $channel )
+        {
+            $data = [
+                'channel_id' => $channel[ 'id' ],
+                'event_id'   => $this->id,
+            ];
+
+            $data = ChannelRelation::create( $data );
+
+            return $data;
+        }
+
+        public function updateChannel( $id, $channel )
+        {
+            $data = [
+                'channel_id' => $channel[ 'id' ],
+                'event_id'   => $this->id,
+            ];
+
+            $data = ChannelRelation::where( 'id', $id )->update( $data );
+
+            return $data;
+        }
+
         public function getChannels()
         {
             $data = ChannelRelation::where( 'event_id', $this->id )->get();
@@ -79,4 +103,25 @@
 
             return $data;
         }
+
+        public function Send()
+        {
+            $this->getChannels();
+
+            $text = '';
+            $text .= ( !empty( $this->name ) ? "<strong>".$this->name."</strong>\n" : '' );
+            $text .= ( !empty( $this->getTypeName() ) ? '🔔  '.$this->getTypeName()."\n" : '' );
+            $text .= ( !empty( $this->the_date ) ? '📆 Дата проведения : '.$this->the_date."\n" : '' );
+            $text .= ( !empty( $this->registration_date ) ? '📆 Начало регистрации : '.$this->registration_date."\n" : '' );
+            $text .= ( !empty( $this->getCityName() ) ? '🏙 Город : <b>'.$this->getCityName()."</b>\n" : '' );
+            $text .= ( !empty( $this->address ) ? '📍 Место : <b>'.$this->address."</b>\n" : '' );
+            $text .= ( !empty( $this->time ) ? '🕐 Время: '.$this->time."\n" : '' );
+            $text .= ( !empty( $this->link ) ? '🔗 Ссылка '.$this->link."\n" : '' );
+            $text .= ( !empty( $this->content ) ? $this->content."\n" : '' );
+
+            foreach( $this->channels as $key => $channel ) {
+                Bot::send( $channel->channel->link, $text );
+            }
+        }
+
     }
