@@ -19,7 +19,12 @@
         {
             $name = $request->input( 'name' );
             $link = $request->input( 'link' );
-            $link = strtolower( '@'.str_replace( 'https://t.me/', '', $link ) );
+            $test = (int)$link;
+
+            if( !$test ) {
+                $link = str_replace( 'https://t.me/', '', $link );
+                $link = ( stristr( $link, "@" ) ? $link : "@".$link );
+            }
             if( !empty( $name ) && !empty( $link ) ) {
                 Channel::create( [ 'name' => $name, 'link' => $link, ] );
             }
