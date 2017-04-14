@@ -109,14 +109,11 @@
             $this->getChannels();
 
             $text = '';
-            $text .= ( !empty( $this->name ) ? "<strong>".$this->name."</strong>\n" : '' );
-            $text .= ( !empty( $this->getTypeName() ) ? '🔔  '.$this->getTypeName()."\n" : '' );
-            $text .= ( !empty( $this->the_date ) ? '📆 Дата проведения : '.$this->the_date."\n" : '' );
-            $text .= ( !empty( $this->registration_date ) ? '📆 Начало регистрации : '.$this->registration_date."\n" : '' );
-            $text .= ( !empty( $this->getCityName() ) ? '🏙 Город : <b>'.$this->getCityName()."</b>\n" : '' );
-            $text .= ( !empty( $this->address ) ? '📍 Место : <b>'.$this->address."</b>\n" : '' );
-            $text .= ( !empty( $this->time ) ? '🕐 Время: '.$this->time."\n" : '' );
-            $text .= ( !empty( $this->link ) ? '🔗 Ссылка '.$this->link."\n" : '' );
+            $text .= ( !empty( $this->name ) ? "<strong>".$this->name."</strong> " : '' ).( !empty( $this->getTypeName() ) ? ' <strong>'.$this->getTypeName()."</strong>\n" : '' );
+            $text .= ( !empty( $this->the_date ) ? '📆 Дата проведения : '.$this->the_date."" : '' ).( !empty( $this->time ) ? ' : '.$this->time."\n" : '' );
+            $text .="Место проведения ". ( !empty( $this->getCityName() ) ? ' <b>'.$this->getCityName()."</b>" : '' ).( !empty( $this->address ) ? ' <b>'.$this->address."</b>\n" : '' );
+            $text .= ( !empty( $this->registration_date ) ? ' Регистрация: до : '.$this->registration_date."\n" : '' );
+            $text .="Подробности ". ( !empty( $this->link ) ? ' '.$this->link."\n" : '' );
             $text .= ( !empty( $this->content ) ? $this->content."\n" : '' );
 
             foreach( $this->channels as $key => $channel ) {
