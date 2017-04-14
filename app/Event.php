@@ -110,9 +110,9 @@
 
             $text = '';
             $text .= ( !empty( $this->name ) ? "<strong>".$this->name."</strong> " : '' ).( !empty( $this->getTypeName() ) ? ' <strong>'.$this->getTypeName()."</strong>\n" : '' );
-            $text .= ( !empty( $this->the_date ) ? '📆 Дата проведения : '.$this->the_date."" : '' ).( !empty( $this->time ) ? ' : '.$this->time."\n" : '' );
-            $text .="Место проведения ". ( !empty( $this->getCityName() ) ? ' <b>'.$this->getCityName()."</b>" : '' ).( !empty( $this->address ) ? ' <b>'.$this->address."</b>\n" : '' );
-            $text .= ( !empty( $this->registration_date ) ? ' Регистрация: до : '.$this->registration_date."\n" : '' );
+            $text .= ( !empty( $this->the_date ) ? '📆 Будет проводиться : '.$this->the_date."" : '' ).( !empty( $this->time ) ? ',начало: в '.$this->time."\n" : '' );
+            $text .="Место проведения : ". ( !empty( $this->getCityName() ) ? ' <b>'.$this->getCityName()."</b>" : '' ).( !empty( $this->address ) ? ' ,<b>'.$this->address."</b>\n" : '' );
+            $text .= ( !empty( $this->registration_date ) ? ' Регистрация до : '.$this->registration_date.".\n" : '' );
             $text .="Подробности ". ( !empty( $this->link ) ? ' '.$this->link."\n" : '' );
             $text .= ( !empty( $this->content ) ? $this->content."\n" : '' );
 
